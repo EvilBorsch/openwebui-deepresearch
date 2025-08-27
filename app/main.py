@@ -43,7 +43,7 @@ app.add_middleware(BearerAuthMiddleware, token_provider=lambda: config.server.au
 _session_counter = SessionCounter(ttl_seconds=config.rate_limit.session_ttl_seconds)
 
 
-@app.get("/", tags=["system"])
+@app.get("/", tags=["system"], include_in_schema=False)
 async def root() -> Dict[str, str]:
     return {
         "name": "Open WebUI Remote Tools",
@@ -52,7 +52,7 @@ async def root() -> Dict[str, str]:
     }
 
 
-@app.get("/healthz", tags=["system"])  # Health probe
+@app.get("/healthz", tags=["system"], include_in_schema=False)  # Health probe
 async def healthz() -> Dict[str, str]:
     return {"status": "ok"}
 
