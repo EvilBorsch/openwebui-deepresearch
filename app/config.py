@@ -55,6 +55,7 @@ class ServerConfig(BaseModel):
     log_file: str = Field(default_factory=lambda: os.getenv("LOG_FILE", "logs/app.log"))
     cors_origins: List[str] = Field(default_factory=lambda: _env_list("CORS_ORIGINS", ["*"]))
     auth_token: Optional[str] = Field(default_factory=lambda: os.getenv("AUTH_TOKEN"))
+    clean_html_enabled: bool = Field(default_factory=lambda: _env_bool("CLEAN_HTML", True))
 
 
 class RateLimitConfig(BaseModel):

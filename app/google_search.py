@@ -65,7 +65,7 @@ def _parse_results(payload: dict, requested_num: int) -> List[SearchResult]:
             )
             results.append(result)
         except Exception as e:  # pragma: no cover
-            logger.debug("Skipping malformed result #%s: %s", idx, e)
+            logger.info("Skipping malformed result #%s: %s", idx, e)
     return results
 
 

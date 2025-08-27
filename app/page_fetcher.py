@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Optional
 
 from playwright.async_api import Browser, BrowserContext, Page, async_playwright
 from playwright_stealth import stealth_async
+from .html_cleaner import clean_html
 
 from .config import Config
 
@@ -90,11 +91,20 @@ async def fetch_page(
             title = await page.title()
             try:
                 html = await page.inner_html("body")
-            except Exception:
+            except Exception as e:
+                logger.info("Body HTML extraction failed, falling back to full document: %s", e)
                 html = await page.content()
+
+            # Optional HTML minimization using HtmlRAG clean_html if available
+            if config.server.clean_html_enabled and html:
+                try:
+                    html = clean_html(html)
+                except Exception as e:
+                    logger.info("HTML cleaning failed; returning uncleaned body HTML: %s", e)
             try:
                 text = await page.inner_text("body")
-            except Exception:
+            except Exception as e:
+                logger.info("Body text extraction failed: %s", e)
                 text = None
 
             links_js = """
@@ -118,7 +128,8 @@ async def fetch_page(
                 try:
                     shot = await page.screenshot(full_page=True)
                     screenshot_b64 = base64.b64encode(shot).decode("ascii")
-                except Exception:
+                except Exception as e:
+                    logger.info("Screenshot capture failed: %s", e)
                     screenshot_b64 = None
 
             return {
