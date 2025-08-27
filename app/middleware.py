@@ -32,6 +32,10 @@ class BearerAuthMiddleware(BaseHTTPMiddleware):
         self._get_token = token_provider
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        # Always allow CORS preflight
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         token = self._get_token()
         path = request.url.path or "/"
         # Enforce bearer auth only for tool endpoints
