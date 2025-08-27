@@ -84,7 +84,7 @@ async def tool_google_search(req: GoogleSearchRequest) -> GoogleSearchResponse:
     tags=["tools"],
     summary="Fetch page content for continued research",
     description=(
-        "Fetch the content of a web page (HTML, plain text, and links) to continue researching a user's request. Optionally capture a screenshot.\n\n"
+        "Fetch the content of a web page (HTML) to continue researching a user's request. Optionally capture a screenshot.\n\n"
         "Usage for the model:\n"
         "- Call when you need primary page content to proceed after search results or to verify details.\n"
         "- You may call this tool multiple times in a session to follow links or gather details; keep total calls under 20 per session.\n"
@@ -129,10 +129,7 @@ async def tool_open_page(req: OpenPageRequest, request: Request) -> OpenPageResp
             status=data.get("status"),
             title=data.get("title"),
             html=data.get("html"),
-            text=data.get("text"),
-            links=data.get("links"),
             screenshot_base64=data.get("screenshot_base64"),
-            timing_ms=data.get("timing_ms"),
         )
     except HTTPException:
         raise

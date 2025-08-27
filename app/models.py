@@ -47,20 +47,12 @@ class OpenPageRequest(BaseModel):
     timezone_id: Optional[str] = Field(None, description="IANA timezone (e.g., 'America/New_York').")
 
 
-class LinkItem(BaseModel):
-    href: HttpUrl
-    text: Optional[str] = None
-
-
 class OpenPageResponse(BaseModel):
     url: HttpUrl
     final_url: Optional[HttpUrl]
     status: Optional[int]
     title: Optional[str]
     html: Optional[str]
-    text: Optional[str]
-    links: List[LinkItem] = Field(default_factory=list)
     screenshot_base64: Optional[str] = None
-    timing_ms: Optional[int] = None
 
 

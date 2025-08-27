@@ -101,27 +101,7 @@ async def fetch_page(
                     html = clean_html(html)
                 except Exception as e:
                     logger.info("HTML cleaning failed; returning uncleaned body HTML: %s", e)
-            try:
-                text = await page.inner_text("body")
-            except Exception as e:
-                logger.info("Body text extraction failed: %s", e)
-                text = None
-
-            links_js = """
-                () => Array.from(document.querySelectorAll('a[href]')).map(a => ({
-                  href: new URL(a.getAttribute('href'), location.href).href,
-                  text: (a.textContent || '').trim()
-                }))
-            """
-            links = await page.evaluate(links_js)
-            # Deduplicate by href while preserving order
-            seen = set()
-            unique_links: List[Dict[str, str]] = []
-            for item in links:
-                href = item.get("href")
-                if href and href not in seen:
-                    seen.add(href)
-                    unique_links.append({"href": href, "text": item.get("text")})
+            # No longer extracting plain text or link list to reduce payload
 
             screenshot_b64: Optional[str] = None
             if want_screenshot:
@@ -137,10 +117,7 @@ async def fetch_page(
                 "final_url": final_url,
                 "title": title,
                 "html": html,
-                "text": text,
-                "links": unique_links,
                 "screenshot_base64": screenshot_b64,
-                "timing_ms": int((time.time() - started) * 1000),
             }
         finally:
             await context.close()
