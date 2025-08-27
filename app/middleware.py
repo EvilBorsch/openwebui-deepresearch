@@ -33,7 +33,9 @@ class BearerAuthMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         token = self._get_token()
-        if token:
+        path = request.url.path or "/"
+        # Enforce bearer auth only for tool endpoints
+        if token and path.startswith("/tools"):
             auth_header = request.headers.get("authorization") or request.headers.get("Authorization")
             if not auth_header or not auth_header.startswith("Bearer ") or auth_header.split(" ", 1)[1] != token:
                 return Response(status_code=401, content=b"Unauthorized")

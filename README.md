@@ -20,7 +20,8 @@ This follows the reference model in the upstream docs: [open-webui/openapi-serve
 
 - POST `/tools/google-search` — Top results via Google CSE
 - POST `/tools/open-page` — Open and extract page HTML/text/links (optional screenshot)
-- GET `/healthz` — liveness
+- GET `/healthz` — liveness (no auth)
+- GET `/` — root info (no auth)
 
 ### Quickstart (Local)
 
@@ -86,13 +87,15 @@ Key variables (via env or .env):
 - PAGE_TOOL_LIMIT — default 20
 - SESSION_TTL_SECONDS — default 3600
 - ENV_FILE — optional .env file path (default .env)
-- AUTH_TOKEN — Bearer token required for all API calls
+- AUTH_TOKEN — Bearer token for /tools endpoints
 
 ### Authorization
 
 - Set `AUTH_TOKEN` in your `.env`.
-- Clients must send header: `Authorization: Bearer <AUTH_TOKEN>`.
-- If `AUTH_TOKEN` is unset, the API allows all requests (not recommended for production).
+- Bearer auth is enforced only on `/tools/*` endpoints.
+- Health and root endpoints are open (no auth): `/healthz`, `/`.
+- Clients must send header on tools calls: `Authorization: Bearer <AUTH_TOKEN>`.
+- If `AUTH_TOKEN` is unset, tools endpoints allow all requests (not recommended for production).
 
 ### Example Requests
 
