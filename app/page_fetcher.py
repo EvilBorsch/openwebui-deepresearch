@@ -88,7 +88,10 @@ async def fetch_page(
             )
 
             title = await page.title()
-            html = await page.content()
+            try:
+                html = await page.inner_html("body")
+            except Exception:
+                html = await page.content()
             try:
                 text = await page.inner_text("body")
             except Exception:
