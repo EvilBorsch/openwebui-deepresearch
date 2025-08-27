@@ -1,0 +1,30 @@
+2025-08-27 19:16:09,406 | INFO | request | GET /docs from 172.19.0.1
+2025-08-27 19:16:09,416 | INFO | request | GET /docs -> 200 in 10ms
+2025-08-27 19:16:10,062 | INFO | request | GET /openapi.json from 172.19.0.1
+2025-08-27 19:16:10,086 | INFO | request | GET /openapi.json -> 200 in 23ms
+2025-08-27 19:16:13,234 | INFO | request | GET /docs from 172.19.0.1
+2025-08-27 19:16:13,237 | INFO | request | GET /docs -> 200 in 3ms
+2025-08-27 19:16:13,769 | INFO | request | GET /openapi.json from 172.19.0.1
+2025-08-27 19:16:13,773 | INFO | request | GET /openapi.json -> 200 in 4ms
+2025-08-27 19:16:47,922 | INFO | request | POST /tools/google-search from 172.19.0.1
+2025-08-27 19:16:47,943 | INFO | request | POST /tools/google-search -> 422 in 20ms
+2025-08-27 19:16:55,101 | INFO | request | POST /tools/google-search from 172.19.0.1
+2025-08-27 19:16:55,132 | INFO | app.google_search | [Google Search] query='Что сейчас идет в Москве в кино?' num=10
+2025-08-27 19:16:55,856 | INFO | app.google_search | [Google Search] returned 10 results
+2025-08-27 19:16:55,859 | INFO | request | POST /tools/google-search -> 200 in 759ms
+2025-08-27 19:17:28,882 | INFO | request | POST /tools/open-page from 172.19.0.1
+2025-08-27 19:17:28,892 | INFO | request | POST /tools/open-page -> 422 in 15ms
+2025-08-27 19:17:33,104 | INFO | request | POST /tools/open-page from 172.19.0.1
+2025-08-27 19:17:33,109 | INFO | request | POST /tools/open-page -> 422 in 4ms
+2025-08-27 19:24:39,931 | INFO | request | GET /openapi.json from 172.19.0.1
+2025-08-27 19:24:39,951 | INFO | request | GET /openapi.json -> 200 in 21ms
+2025-08-27 19:24:47,169 | INFO | request | POST /tools/open-page from 172.19.0.1
+2025-08-27 19:24:47,177 | INFO | request | POST /tools/open-page -> 422 in 8ms
+2025-08-27 19:25:26,812 | INFO | request | GET /docs from 172.19.0.1
+2025-08-27 19:25:26,828 | INFO | request | GET /docs -> 200 in 17ms
+2025-08-27 19:25:27,382 | INFO | request | GET /openapi.json from 172.19.0.1
+2025-08-27 19:25:27,387 | INFO | request | GET /openapi.json -> 200 in 5ms
+2025-08-27 19:25:31,867 | INFO | request | POST /tools/open-page from 172.19.0.1
+2025-08-27 19:25:31,876 | INFO | request | POST /tools/open-page -> 422 in 9ms
+2025-08-27 19:26:18,601 | INFO | request | POST /tools/open-page from 172.19.0.1
+2025-08-27 19:26:21,985 | INFO | request | POST /tools/open-page -> 200 in 3384ms
