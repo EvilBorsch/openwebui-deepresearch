@@ -34,6 +34,7 @@ GOOGLE_API_KEY=your_api_key
 GOOGLE_CX=your_cse_id
 LOG_LEVEL=INFO
 LOG_FILE=logs/app.log
+AUTH_TOKEN=change_me
 EOF
 python -m playwright install --with-deps chromium
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -44,7 +45,7 @@ Open: `http://localhost:8000/docs`
 ### Quickstart (Docker)
 
 ```bash
-# Create a .env file with your values (GOOGLE_API_KEY, GOOGLE_CX, etc.)
+# Create a .env file with your values (GOOGLE_API_KEY, GOOGLE_CX, AUTH_TOKEN, etc.)
 cp .env .env.local || true
 # Edit .env or .env.local
 
@@ -85,6 +86,13 @@ Key variables (via env or .env):
 - PAGE_TOOL_LIMIT — default 20
 - SESSION_TTL_SECONDS — default 3600
 - ENV_FILE — optional .env file path (default .env)
+- AUTH_TOKEN — Bearer token required for all API calls
+
+### Authorization
+
+- Set `AUTH_TOKEN` in your `.env`.
+- Clients must send header: `Authorization: Bearer <AUTH_TOKEN>`.
+- If `AUTH_TOKEN` is unset, the API allows all requests (not recommended for production).
 
 ### Example Requests
 
@@ -92,6 +100,7 @@ Key variables (via env or .env):
 
 ```bash
 curl -s -X POST http://localhost:8000/tools/google-search \
+  -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
   -d '{"query":"latest llama news","num":10}' | jq
 ```
@@ -100,8 +109,9 @@ curl -s -X POST http://localhost:8000/tools/google-search \
 
 ```bash
 curl -s -X POST http://localhost:8000/tools/open-page \
+  -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -d '{"url":"https://example.com","session_id":"abc123","screenshot":false}' | jq
+  -d '{"url":"https://example.com","screenshot":false}' | jq
 ```
 
 ### Logging

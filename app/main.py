@@ -10,7 +10,7 @@ from .google_search import google_search
 from .logging_utils import setup_logging
 from .models import GoogleSearchRequest, GoogleSearchResponse, OpenPageRequest, OpenPageResponse
 from .page_fetcher import fetch_page
-from .middleware import RequestLoggingMiddleware
+from .middleware import RequestLoggingMiddleware, BearerAuthMiddleware
 from .rate_limit import SessionCounter
 
 
@@ -36,6 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(RequestLoggingMiddleware, logger=logging.getLogger("request"))
+app.add_middleware(BearerAuthMiddleware, token_provider=lambda: config.server.auth_token)
 
 
 # In-memory per-session usage counter for the page open tool

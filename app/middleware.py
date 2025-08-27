@@ -26,3 +26,17 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
             self._logger.info("%s %s -> %s in %sms", method, path, getattr(response, "status_code", "-"), elapsed)
 
 
+class BearerAuthMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app, token_provider) -> None:
+        super().__init__(app)
+        self._get_token = token_provider
+
+    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        token = self._get_token()
+        if token:
+            auth_header = request.headers.get("authorization") or request.headers.get("Authorization")
+            if not auth_header or not auth_header.startswith("Bearer ") or auth_header.split(" ", 1)[1] != token:
+                return Response(status_code=401, content=b"Unauthorized")
+        return await call_next(request)
+
+
